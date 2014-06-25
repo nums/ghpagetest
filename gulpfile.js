@@ -60,7 +60,12 @@ gulp.task('verb-docs', function () {
   gulp.src(['docs/README.tmpl.md'])
     // dest filename is defined in options,
     // otherwise gulp will overwrite .verbrc.md
-    .pipe(verb({dest: 'README.md'}))
+    .pipe(verb({
+      dest: 'README.md',
+      type: type,
+      jsstart : '```js',
+      jsend : '```'
+    }))
     .pipe(gulp.dest('./'));
 });
 
@@ -68,9 +73,14 @@ gulp.task('verb-gh-pages', function () {
   gulp.src(['docs/index.tmpl.md'])
     // dest filename is defined in options,
     // otherwise gulp will overwrite .verbrc.md
-    .pipe(verb({dest: 'index.html'}))
+    .pipe(verb({
+      dest: 'index.html',
+      type: type,
+      jsstart : '<script>',
+      jsend : '</script>'
+    }))
     .pipe(gulp.dest('./gh-pages'))
-    .pipe(deploy({remoteUrl : "https://github.com/nums/ghpagetest.git"}));
+    .pipe(deploy({remoteUrl : packageJson.repository.url}));
 });
 
 /*gulp.task('deploy-gh-pages', function () {
@@ -85,7 +95,7 @@ if(type == "build")
 
 if(type == "test") {
   gulp.task('watch', function() {
-    gulp.watch("./", ['dependencies', 'lib', 'standalone', 'uglify']);
+    gulp.watch("./", ['dependencies', 'lib']);
   });
 
   gulp.task('default', ['dependencies', 'lib', 'connectDev' , 'watch']);

@@ -1,5 +1,5 @@
-{%= html("header.html") %}
+<p>HEADER</p>
 
-{%= docs("README.tmpl.md") %}
+{%= html("README.tmpl.md") %}
 
-{%= html("footer.html") %}
+<p>FOOTER</p>
