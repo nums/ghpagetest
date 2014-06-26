@@ -31,7 +31,7 @@ After make build
 Run the server on 9001 port (you can change the port in the gulpfile.js)
 
 ```bash
-$ gulp --type=test
+$ gulp test
 ```
 
 Run the test via the web browser on `http://localhost:9001/tests`
@@ -41,13 +41,13 @@ Run the test via the web browser on `http://localhost:9001/tests`
 README.md generation
 
 ```bash
-$ gulp --type=docs
+$ gulp docs
 ```
 
 Github Pages generation
 
 ```bash
-$ gulp --type=gh-pages
+$ gulp gh-pages
 ```
 {% } %}
 
