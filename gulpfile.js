@@ -62,7 +62,7 @@ gulp.task('verb-docs', function () {
     // otherwise gulp will overwrite .verbrc.md
     .pipe(verb({
       dest: 'README.md',
-      type: type,
+      type: 'docs',
       jsstart : '```js',
       jsend : '```'
     }))
@@ -75,7 +75,7 @@ gulp.task('verb-gh-pages', function () {
     // otherwise gulp will overwrite .verbrc.md
     .pipe(verb({
       dest: 'index.html',
-      type: type,
+      type: 'gh-pages',
       jsstart : '<script>',
       jsend : '</script>'
     }))
@@ -83,29 +83,17 @@ gulp.task('verb-gh-pages', function () {
     .pipe(deploy({remoteUrl : packageJson.repository.url}));
 });
 
-/*gulp.task('deploy-gh-pages', function () {
-    gulp.src("./gh-pages/index.html")
-      
-});*/
+//var type = args.type || "build";
 
-var type = args.type || "build";
+gulp.task('default', ['standalone', 'uglify']);
 
-if(type == "build")
-  gulp.task('default', ['standalone', 'uglify']);
+gulp.task('watch', function() {
+  gulp.watch("./", ['dependencies', 'lib']);
+});
 
-if(type == "test") {
-  gulp.task('watch', function() {
-    gulp.watch("./", ['dependencies', 'lib']);
-  });
+gulp.task('test', ['dependencies', 'lib', 'connectDev' , 'watch']);
 
-  gulp.task('default', ['dependencies', 'lib', 'connectDev' , 'watch']);
-}
+gulp.task('docs', ['verb-docs']);
 
-if(type == "docs") {
-  gulp.task('default', ['verb-docs']);
-}
+gulp.task('gh-pages', ['verb-gh-pages']);
 
-//, 'deploy-gh-pages'
-if(type == "gh-pages") {
-  gulp.task('default', ['verb-gh-pages']);
-}
